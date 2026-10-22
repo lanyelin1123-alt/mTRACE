@@ -13,8 +13,11 @@
 Reference files expected by the scripts include the hg38 genome/index, a matching hg38 GTF, feature-annotation BED files, and a gene BED file. Ensure all reference files use a consistent genome build and chromosome naming convention.
 
 hg38 genome: `Homo_sapiens.GRCh38.dna.primary_assembly.fa`
+
 hg38 gtf: `Homo_sapiens.GRCh38.109.gtf`
+
 feature-annotation BED files: `reference/hg38_features_IntergenicExcldTSS500bp.bed`
+
 gene BED file: `reference/hg38_gene.bed`
 
 ## Scripts and steps
@@ -45,7 +48,9 @@ Repeats the strand-splitting and R2-to-R1 fla conversion procedure from `02.1`, 
 ### `06-RBP_bindingSite_annotation.sh` — Annotate peak summits
 
 feature-annotated peak tables, parsed feature labels, gene-annotation tables, and gene lists.
+
 The Python script reads a tab-delimited BED-like annotation table, examines the comma-separated feature labels in column 5 (zero-based index 4), and assigns one label using this priority: `five_prime_utr > CDS > three_prime_utr > exon > intron > TSS_upstream500 > start_codon > stop_codon > Intergenic`.
+
 If all three mRNA exon categories (`five_prime_utr`, `CDS`, and `three_prime_utr`) overlap, the site is labelled `mRNA_exons_mix`; if one or more of those categories overlaps together with exon, it is labelled `exons_mix`.
 
 ### `07-featureCounts.sh` — Gene-level exon counts
