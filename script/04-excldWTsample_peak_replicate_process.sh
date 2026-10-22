@@ -1,4 +1,4 @@
-wd=wd=/path/to/project_work_folder
+wd=/path/to/project_work_folder
 highcon_dir=${wd}/result/peak/macs2_excldWT/highcon
 idr_dir=${highcon_dir}/idr
 mkdir -p $idr_dir
