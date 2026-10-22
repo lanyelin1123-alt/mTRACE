@@ -35,7 +35,7 @@ This R2-to-R1 flag conversion is used to make reads from both mates available to
 
 ### `03.2-excldWT_stranded_switch.sh` — Strand splitting and flag normalization after WT exclusion
 
-Repeats the strand-splitting and R2-to-R1 fla conversion procedure from `02.1`, but uses the WT-excluded BAMs as input. 
+Repeats the strand-splitting and R2-to-R1 flag conversion procedure from `02.1`, but uses the WT-excluded BAMs as input. 
 
 ### `03.3-excldWTsample_peakcalling.sh` — Call peaks in WT-excluded samples
 
@@ -43,7 +43,7 @@ Repeats the strand-splitting and R2-to-R1 fla conversion procedure from `02.1`, 
 
 ### `05-excldWTsample_getUniqPeak.sh` — Identify sample-specific peaks and count reads
 
-#### Required downstream step: limma filtering of significant peaks
+#### Required downstream step: `limma` filtering of significant peaks
 
 ### `06-RBP_bindingSite_annotation.sh` — Annotate peak summits
 
