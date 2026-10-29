@@ -16,13 +16,13 @@ for name in ${sample_group[@]}
 do
 {
 ###extract peak summits (filtered by limma)
-i=log2FCquant75
+i=suffix ###e.g. log2FCquant75
 sort -k1,1 -k2,2n $filter_dir/${name}_${i}.bed > $filter_dir/${name}_${i}.sort.bed
 bedtools intersect -a $uniq_peak_dir/${name}.idrPeakSort.uniq.summit.bed -b $filter_dir/${name}_${i}.sort.bed -s -wa | awk 'BEGIN{OFS="\t"}{print $1,$2,$3,"summit_"NR,$5,$6}' > $filter_dir/${name}_${i}.summit.bed
 
 ###anno2geneFeature
-bedtools intersect -a $filter_dir/${name}_${i}.summit.bed  -b $hg38_features -s -wa -wb > $annot2feature_dir/${name}_${i}.genic.anno.tmp.bed
-awk 'BEGIN{OFS="\t"}ARGIND==1{a[$4]=$0}ARGIND==2{if(!($4 in a)) {print $0,"Intergenic","Intergenic","Intergenic","Intergenic","Intergenic","Intergenic","Intergenic"}}' $annot2feature_dir/${name}_${i}.genic.anno.tmp.bed $filter_dir/${name}_${i}.summit.bed > $annot2feature_dir/${name}_${i}.intergenic.anno.tmp.bed
+bedtools intersect -a $filter_dir/${name}_${i}.summit.bed -b $hg38_features -s -wa -wb > $annot2feature_dir/${name}_${i}.genic.anno.tmp.bed
+bedtools intersect -a $filter_dir/${name}_${i}.summit.bed -b $hg38_features -v |awk 'BEGIN{OFS="\t"}{print $0,"Intergenic","Intergenic","Intergenic","Intergenic","Intergenic","Intergenic","Intergenic"}' > $annot2feature_dir/${name}_${i}.intergenic.anno.tmp.bed
 cat $annot2feature_dir/${name}_${i}.genic.anno.tmp.bed $annot2feature_dir/${name}_${i}.intergenic.anno.tmp.bed | sort -k1,1 -k2,2n > $annot2feature_dir/${name}_${i}.anno.bed
 bedtools merge -i $annot2feature_dir/${name}_${i}.anno.bed -s -c 4,10,13 -o first,distinct,distinct | awk 'BEGIN{OFS="\t"}{print $1,$2,$3,$5,$6,$4,$7}' > $annot2feature_dir/${name}_${i}.annoMerge.bed
 python parse_m6Aannotation.step06.py -i $annot2feature_dir/${name}_${i}.annoMerge.bed -o $annot2feature_dir/${name}_${i}.annoParse.bed
